@@ -304,6 +304,19 @@ outputs =
           username = "mba";
         };
       };
+      # Online Server onlineserver01 for mba
+      onlineserver01 = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          home-manager.nixosModules.home-manager
+          disko.nixosModules.disko
+          ./hosts/onlineserver01/configuration.nix
+        ];
+        specialArgs = self.commonArgs // {
+          inherit inputs;
+          username = "mba";
+        };
+      };
       vm-netcup02 = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
