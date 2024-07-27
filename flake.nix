@@ -291,7 +291,7 @@ outputs =
           username = "cow";
         };
       };
-      # Home Server miniserver24 for Markus
+      # Home Server miniserver24 for mba
       miniserver24 = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [

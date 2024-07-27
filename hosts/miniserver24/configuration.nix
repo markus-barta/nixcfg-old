@@ -1,4 +1,4 @@
-  # miniserver24 server for Markus
+  # miniserver24 server for mba
 { modulesPath, config, pkgs, username, ... }:
 
 {
