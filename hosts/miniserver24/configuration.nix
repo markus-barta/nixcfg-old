@@ -6,7 +6,7 @@
     [
       ./hardware-configuration.nix
       ../../modules/mixins/server-local.nix
-      ../../modules/mixins/remote-store-cache.nix
+      ../../modules/mixins/server-mba.nix
       ./disk-config.zfs.nix
     ];
 
@@ -31,25 +31,6 @@
       sleep 2
       zpool import -a;
     '';
-  };
-
-  # No password needed for sudo for wheel group
-  security.sudo.wheelNeedsPassword = false;
-
-  users.users.${username} = {
-    description = "Markus";
-    openssh.authorizedKeys.keys = [
-      # Markus public key
-      "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGIQIkx1H1iVXWYKnHkxQsS7tGsZq3SoHxlVccd+kroMC/DhC4MWwVnJInWwDpo/bz7LiLuh+1Bmq04PswD78EiHVVQ+O7Ckk32heWrywD2vufihukhKRTy5zl6uodb5+oa8PBholTnw09d3M0gbsVKfLEi4NDlgPJiiQsIU00ct/y42nI0s1wXhYn/Oudfqh0yRfGvv2DZowN+XGkxQQ5LSCBYYabBK/W9imvqrxizttw02h2/u3knXcsUpOEhcWJYHHn/0mw33tl6a093bT2IfFPFb3LE2KxUjVqwIYz8jou8cb0F/1+QJVKtqOVLMvDBMqyXAhCkvwtEz13KEyt"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAhUleyXsqtdA4LC17BshpLAw0X1vMLNKp+lOLpf2bw1 mba@miniserver24" # node-red container ssh calls
-    ];
-  };
-
-  home-manager.users.${username} = {
-    programs.git = {
-      userName  = "Markus Barta";
-      userEmail = "markus@barta.com";
-    };
   };
 
   networking = {
@@ -105,17 +86,4 @@
     samba  # Needed for net command to remotely shut down the windows pc from node red and finall via homekit voice command
     wol    # Needed for wake on lan of the windows 10 pc in node red - for a homekit voice command
   ];
-
-  # Set mba specific fish config
-  programs.fish = {
-    shellAliases = {
-#      mc = "EDITOR=nano mc";
-    };
-    shellAbbrs = {
-#      cat = "bat";
-    };
-  };
-
-  environment.variables.EDITOR = "nano";
-  programs.fish.interactiveShellInit = "export EDITOR=nano";
 }
