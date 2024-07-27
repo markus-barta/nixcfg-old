@@ -6,6 +6,7 @@
     [
       ./hardware-configuration.nix
       ../../modules/mixins/server-remote.nix
+      ../../modules/mixins/server-mba.nix
       ./disk-config.zfs.nix
     ];
 
