@@ -86,4 +86,21 @@
     samba  # Needed for net command to remotely shut down the windows pc from node red and finall via homekit voice command
     wol    # Needed for wake on lan of the windows 10 pc in node red - for a homekit voice command
   ];
+
+  # Custom Zellij Keybinds
+  home-manager.users.${username} = {
+    home.file."/home/mba/.config/zellij/config.kdl".text = ''
+      keybinds {
+        unbind "Ctrl o"
+        normal {
+            bind "Ctrl e" { SwitchToMode "Session"; }
+        }
+        session {
+          bind "Ctrl e" { SwitchToMode "Normal"; }
+        }
+      }
+      session_serialization false;
+    '';
+  };
+
 }

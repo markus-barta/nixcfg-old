@@ -22,20 +22,6 @@
       userEmail = "markus@barta.com";
     };
 
-    home.file."/home/mba/.config/zellij/config.kdl".text = ''
-      keybinds {
-        unbind "Ctrl o"
-        normal {
-            bind "Ctrl e" { SwitchToMode "Session"; }
-        }
-        session {
-          bind "Ctrl e" { SwitchToMode "Normal"; }
-        }
-      }
-      session_serialization false;
-    '';
-  };
-
   # Set mba specific fish config # = examples, not used
   programs.fish = {
     shellAliases = {

@@ -1,5 +1,5 @@
-# onlineserver01 Netcup server mba
-{ modulesPath, config, pkgs, ... }:
+# csb0 (onlineserver01) Netcup server mba
+{ modulesPath, config, pkgs, username, ... }:
 
 {
   imports =
@@ -46,4 +46,22 @@
 
   environment.systemPackages = with pkgs; [
   ];
+
+  # Custom Zellij Keybinds
+  home-manager.users.${username} = {
+    home.file."/home/mba/.config/zellij/config.kdl".text = ''
+      keybinds {
+        unbind "Ctrl o"
+        normal {
+            bind "Ctrl e" { SwitchToMode "Session"; }
+        }
+        session {
+          bind "Ctrl e" { SwitchToMode "Normal"; }
+        }
+      }
+      session_serialization false;
+    '';
+  };
+
+
 }
