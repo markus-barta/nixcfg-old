@@ -22,19 +22,21 @@
       userEmail = "markus@barta.com";
     };
 
-  # Zellij configuration
+    # Zellij configuration
     programs.zellij = {
       enable = true;
       settings = {
-        keybinds = {
-          unbind = ["Ctrl o"];
-          normal = {
-            "Ctrl e" = { SwitchToMode = "Session"; };
-          };
-          session = {
-            "Ctrl e" = { SwitchToMode = "Normal"; };
-          };
-        };
+        keybinds = ''
+          keybinds {
+            unbind "Ctrl o"
+            normal {
+              bind "Ctrl e" { SwitchToMode "Session"; }
+            }
+            session {
+              bind "Ctrl e" { SwitchToMode "Normal"; }
+            }
+          }
+        '';
         session_serialization = false;
       };
     };
