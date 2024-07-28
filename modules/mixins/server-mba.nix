@@ -21,6 +21,23 @@
       userName  = "Markus Barta";
       userEmail = "markus@barta.com";
     };
+
+  # Zellij configuration
+    programs.zellij = {
+      enable = true;
+      settings = {
+        keybinds = {
+          unbind = ["Ctrl o"];
+          normal = {
+            "Ctrl e" = { SwitchToMode = "Session"; };
+          };
+          session = {
+            "Ctrl e" = { SwitchToMode = "Normal"; };
+          };
+        };
+        session_serialization = false;
+      };
+    };
   };
 
   # Set mba specific fish config # = examples, not used
