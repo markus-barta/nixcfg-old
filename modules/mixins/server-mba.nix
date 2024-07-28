@@ -25,20 +25,8 @@
     # Zellij configuration
     programs.zellij = {
       enable = true;
-      settings = {
-        keybinds = ''
-          keybinds {
-            unbind "Ctrl o"
-            normal {
-              bind "Ctrl e" { SwitchToMode "Session"; }
-            }
-            session {
-              bind "Ctrl e" { SwitchToMode "Normal"; }
-            }
-          }
-        '';
-        session_serialization = false;
-      };
+      settings.keybinds.unbind = "Ctrl o";
+      settings.session_serialization = false;
     };
   };
 
