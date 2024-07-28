@@ -278,7 +278,7 @@ outputs =
         ];
         specialArgs = self.commonArgs // { inherit inputs; };
       };
-      # Server moobox01 for Alex
+      # Server moobox01 (for Alex)
       moobox01 = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
@@ -291,7 +291,7 @@ outputs =
           username = "cow";
         };
       };
-      # Home Server miniserver24 for mba
+      # Home Server miniserver24 (for mba)
       miniserver24 = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
@@ -304,13 +304,13 @@ outputs =
           username = "mba";
         };
       };
-      # Online Server onlineserver01 for mba
-      onlineserver01 = nixpkgs.lib.nixosSystem {
+      # Cloud Server 0 Barta (for mba)
+      csb0 = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           home-manager.nixosModules.home-manager
           disko.nixosModules.disko
-          ./hosts/onlineserver01/configuration.nix
+          ./hosts/csb0/configuration.nix
         ];
         specialArgs = self.commonArgs // {
           inherit inputs;

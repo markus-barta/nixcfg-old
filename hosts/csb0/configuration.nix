@@ -1,4 +1,4 @@
-# csb0 (onlineserver01) Netcup server mba
+# csb0 (legacy name: onlineserver01) Netcup server mba
 { modulesPath, config, pkgs, username, ... }:
 
 {
@@ -35,7 +35,7 @@
 
   networking = {
     hostId = "dabfdc01";  # needed for ZFS
-    hostName = "onlineserver01";
+    hostName = "csb0";
     networkmanager.enable = true;
 
     # ssh is already enabled by the server-common mixin
