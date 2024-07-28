@@ -21,6 +21,7 @@
       userName  = "Markus Barta";
       userEmail = "markus@barta.com";
     };
+  };
 
   # Set mba specific fish config # = examples, not used
   programs.fish = {
