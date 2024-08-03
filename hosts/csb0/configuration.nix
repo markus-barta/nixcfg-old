@@ -110,7 +110,7 @@
           }
 
           csb0 {
-              bg "#1a1a1a" // + Window bg
+              bg "#1a1a1a" // + bg
               fg "#6666af" // + Footer buttons
               red "#ffffff" // + White
               green "#9999ff" // + Frame
@@ -119,7 +119,7 @@
               magenta "#aa00ff" // Neon Purple
               orange "#006611" // Retro Red
               cyan "#00e5e5" // Cyan
-              black "#000000" // Black
+              black "#f00000" // Black
               white "#ffffff" // White
           }
       }
