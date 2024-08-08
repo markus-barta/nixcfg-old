@@ -44,6 +44,19 @@
     };
   };
 
+  ## mba <
+  users.groups.mosquitto = {
+    gid = 1883;
+  };
+
+  users.users.${username}.extraGroups = [ "mosquitto" ];
+
+  system.activationScripts.mosquittoPermissions = ''
+    chown -R ${username}:mosquitto /home/${username}/docker/mosquitto
+    chmod -R 775 /home/${username}/docker/mosquitto
+  '';
+  ## > mba
+
   environment.systemPackages = with pkgs; [
   ];
 
@@ -110,24 +123,24 @@
           }
 
           csb0 {
-              bg "#1a1a1a" // + bg
-              fg "#6666af" // + Footer buttons
-              red "#ffffff" // + White
+              bg "#9999ff" // + Text Selection
+              fg "#6666af" // + Footer Buttons
+              red "#f0f0f0" // + Shortcuts in Buttons (best: white)
               green "#9999ff" // + Frame
               blue "#00d9e3" // Electric Blue
               yellow "#aae600" // Neon Yellow
               magenta "#aa00ff" // Neon Purple
               orange "#006611" // Retro Red
               cyan "#00e5e5" // Cyan
-              black "#f00000" // Black
+              black "#00000f" // + Header and Footer bg (Black)
               white "#ffffff" // White
           }
       }
-      
-      session_serialization false;
+
+      session_serialization true;
       theme "csb0";
 
-    '';
+      '';
   };
 
 
