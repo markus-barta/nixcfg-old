@@ -77,10 +77,18 @@
       keybinds {
           unbind "Ctrl o"
           normal {
+              bind "Ctrl a" { MoveTab "Left"; }
               bind "Ctrl e" { SwitchToMode "Session"; }
           }
           session {
               bind "Ctrl e" { SwitchToMode "Normal"; }
+          }
+          tab {
+              bind "c" {
+                  NewTab {
+                      cwd "~"
+                  }
+              }
           }
       }
 
@@ -142,7 +150,7 @@
               white "#cdd6f4"
           }
 
-          // csb0 theme
+          // cloud server csb0 theme
           csb0 {
               bg "#9999ff"  // + Text Selection
               fg "#6666af"  // + Footer Buttons
@@ -157,7 +165,22 @@
               white "#ffffff" // White
           }
 
-          // ms theme
+          // miniserver24 theme
+          ms24 {
+              bg "#585b70" // Surface2
+              fg "#d5f4cd" // pastell green
+              red "#2a9e00" // dark green
+              green "#a6e3a1"
+              blue "#89b4fa"
+              yellow "#f9e2af"
+              magenta "#f5c2e7" // Pink
+              orange "#fab387" // Peach
+              cyan "#89dceb" // Sky
+              black "#181825" // Mantle
+              white "#cdd6f4"
+          }
+
+          // miniserver theme
           ms {
               bg "#9f9f9f"  // + Text Selection
               fg "#6f6f6f"  // + Footer Buttons
@@ -173,12 +196,11 @@
           }
       }
 
-      // Zellij session configuration
+      // Session configuration (optionally restores terminated sessions on start)
       session_serialization true
 
-      // Theme to be used by Zellij
+      // Theme to be used
       theme "csb0"
-
     '';
   };
 }
