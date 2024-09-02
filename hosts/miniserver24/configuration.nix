@@ -1,4 +1,4 @@
-# miniserver24 server for mba
+# Configuration for miniserver24 (mba)
 { modulesPath, config, pkgs, username, ... }:
 
 {
@@ -110,6 +110,7 @@
                   NewTab {
                       cwd "~"
                   }
+                  SwitchToMode "normal";
               }
           }
       }
