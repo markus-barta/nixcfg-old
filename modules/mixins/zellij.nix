@@ -104,8 +104,23 @@ home-manager.users.${username} = {
               white "#ffffff" // White
           }
 
+          // cloud server csb1 theme
+          csb1 {
+              bg "#b3b3ff"  // + Text Selection
+              fg "#8080cc"  // + Footer Buttons
+              red "#f5f5f5" // + Shortcuts in Buttons (best: white)
+              green "#b3b3ff" // + Frame
+              blue "#00e6ff" // Electric Blue
+              yellow "#bbff00" // Neon Yellow
+              magenta "#bb00ff" // Neon Purple
+              orange "#007722" // Retro Red
+              cyan "#00ffff" // Cyan
+              black "#00000f" // + Header and Footer bg (Black)
+              white "#ffffff" // White
+          }
+
           // miniserver24 theme
-          ms24 {
+          miniserver24 {
               bg "#585b70" // Surface2
               fg "#d5f4cd" // pastell green
               red "#2a9e00" // dark green
