@@ -302,6 +302,7 @@ outputs =
         specialArgs = self.commonArgs // {
           inherit inputs;
           username = "mba";
+          hostName = "miniserver24"; # only for zellij
         };
       };
       # Cloud Server 0 Barta (for mba)
