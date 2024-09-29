@@ -315,7 +315,7 @@ outputs =
         specialArgs = self.commonArgs // {
           inherit inputs;
           username = "mba";
-          hostName = "csb0"; // only for zellij
+          hostName = "csb0"; # only for zellij
         };
       };
       # Cloud Server 1 Barta (for mba)
@@ -329,7 +329,7 @@ outputs =
         specialArgs = self.commonArgs // {
           inherit inputs;
           username = "mba";
-          hostName = "csb1"; // only for zellij
+          hostName = "csb1"; # only for zellij
         };
       };
       vm-netcup02 = nixpkgs.lib.nixosSystem {
