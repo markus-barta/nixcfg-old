@@ -102,15 +102,15 @@
   # Note: For start script go to: /home/kiosk/.config/openbox/autostart
   services.xserver = {
     enable = true;
-    displayManager = {
-      lightdm.enable = true;
-      autoLogin = {
-        enable = true;
-        user = "kiosk";
-      };
-      defaultSession = "none+openbox";
-    };
+    displayManager.lightdm.enable = true;
     windowManager.openbox.enable = true;
+  };
+  services.displayManager = {
+    autoLogin = {
+      enable = true;
+      user = "kiosk";
+    };
+    defaultSession = "none+openbox";
   };
 
   # Configuration for user "kiosk"
