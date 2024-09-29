@@ -318,6 +318,20 @@ outputs =
           hostName = "csb0"; // only for zellij
         };
       };
+      # Cloud Server 1 Barta (for mba)
+      csb1 = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          home-manager.nixosModules.home-manager
+          disko.nixosModules.disko
+          ./hosts/csb1/configuration.nix
+        ];
+        specialArgs = self.commonArgs // {
+          inherit inputs;
+          username = "mba";
+          hostName = "csb1"; // only for zellij
+        };
+      };
       vm-netcup02 = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
