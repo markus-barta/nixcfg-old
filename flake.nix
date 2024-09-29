@@ -315,6 +315,7 @@ outputs =
         specialArgs = self.commonArgs // {
           inherit inputs;
           username = "mba";
+          hostName = "csb0"; // only for zellij
         };
       };
       vm-netcup02 = nixpkgs.lib.nixosSystem {
