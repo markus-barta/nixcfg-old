@@ -15,7 +15,6 @@
   # Bootloader configuration
   boot = {
     supportedFilesystems = [ "zfs" ];
-    kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
     loader.grub = {
       enable = true;
       zfsSupport = true;
