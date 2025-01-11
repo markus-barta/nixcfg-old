@@ -1,5 +1,5 @@
 # Configuration for miniserver24 (mba)
-{ modulesPath, config, pkgs, username, ... }:
+{ modulesPath, config, pkgs, lib, username, ... }:
 
 {
   # Import necessary configuration modules
@@ -11,6 +11,15 @@
     ../../modules/mixins/zellij.nix
     ./disk-config.zfs.nix
   ];
+
+  # Allow unfree package for "FLIRC" IR-USB-Module
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+    "flirc"
+  ];
+
+  # boot.kernelParams = [ "video=card1-HDMI-A-1:1366x768@60" ];
+  # alternative as generic video output:
+  # boot.kernelParams = [ "video=1920x1080@60" ];
 
   # Bootloader configuration
   boot = {
@@ -81,21 +90,28 @@
   # https://nixos.wiki/wiki/Fwupd
   services.fwupd.enable = true;
 
-  # Additional system packages
+  # Enable FLIRC IR-USB-Module
+  hardware.flirc.enable = true;
+  users.users.mba.extraGroups = [ "plugdev" ];
+
+   # Additional system packages
   environment.systemPackages = with pkgs; [
     # Network-related packages
     samba  # Enables remote shutdown of Windows PC via Node-RED and HomeKit voice command
     wol    # Facilitates wake-on-LAN for Windows 10 PC in Node-RED, triggered by HomeKit voice command
     mosquitto  # Only for mosquitto_sub on system level
-
+    usbutils  # Provides lsusb and other USB utilities
+    #flirc-bin # Command line tool for programming FLIRC
+    evtest    # For testing input device events
+    ## --------------------------------------
     # Packages for kiosk-mode-vlc-cam viewer
-    # Note: Packages vlc, openbox, xorg.xset work together to create a kiosk-mode camera viewer
+    # Note: Packages vlc, openbox, xorg.xset
+    #   work together to create a kiosk-mode
+    #   camera viewer
+    ## --------------------------------------
     vlc     # Video playback software
     openbox # Lightweight window manager
     xorg.xset  # X11 user preference utility tool
-    #pamixer    # Command-line audio mixer for PulseAudio
-    #pulseaudio  # Provides 'pactl' for per-application volume control
-
   ];
 
   # +X11 and VLC kiosk mode configuration
