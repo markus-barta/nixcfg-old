@@ -106,17 +106,17 @@ home-manager.users.${username} = {
 
           // cloud server csb1 theme
           csb1 {
-              bg "#b3b3ff"  // + Text Selection
-              fg "#8080cc"  // + Footer Buttons
-              red "#f5f5f5" // + Shortcuts in Buttons (best: white)
-              green "#b3b3ff" // + Frame
-              blue "#00e6ff" // Electric Blue
-              yellow "#bbff00" // Neon Yellow
-              magenta "#bb00ff" // Neon Purple
-              orange "#007722" // Retro Red
-              cyan "#00ffff" // Cyan
-              black "#00000f" // + Header and Footer bg (Black)
-              white "#ffffff" // White
+              bg "#c45fc0"       // + Text Selection
+              fg "#cb54e3"       // + Footer Buttons
+              red "#f5f5f5"      // + Shortcuts in Buttons (best: white)
+              green "#cb54e3"    // + Frame
+              blue "#0000ff"     // -
+              yellow "#ffff00"   // -
+              magenta "#ff00ff"  // -
+              orange "#ed94ff"   // + Highlight Text (eg. Alt)
+              cyan "#00ffff"     // -
+              black "#00000f"    // + Header and Footer bg (Black)
+              white "#ffffff"    // -
           }
 
           // miniserver24 theme

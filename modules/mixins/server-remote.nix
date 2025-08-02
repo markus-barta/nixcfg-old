@@ -9,6 +9,10 @@
     listenAddresses = [ { addr = "0.0.0.0"; port = 2222; } ];
   };
 
+  # Enable QEMU guest services (qemu-guest-agent) for web-control of Netcup servers
+  # Used for: Safe system shutdown, among other features utilized by the SCP.
+  services.qemuGuest.enable = true;
+
   # Firewall
   # https://nixos.wiki/wiki/Firewall
   networking.firewall = {
