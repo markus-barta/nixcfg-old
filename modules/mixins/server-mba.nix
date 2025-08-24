@@ -24,7 +24,7 @@
     };
   };
 
-  # Set mba specific fish config # = examples, not used
+  # Set mba specific fish config
   programs.fish = {
     shellAliases = {
 #      mc = "EDITOR=nano mc";
@@ -32,9 +32,27 @@
     shellAbbrs = {
 #      cat = "bat";
     };
+    interactiveShellInit = ''
+      function sourcefish --description 'Load env vars from a .env file into current Fish session'
+        set file "$argv[1]"
+        if test -z "$file"
+          echo "Usage: sourcefish PATH_TO_ENV_FILE"
+          return 1
+        end
+        if test -f "$file"
+          for line in (cat "$file" | grep -v '^[[:space:]]*#' | grep .)
+            set key (echo $line | cut -d= -f1)
+            set val (echo $line | cut -d= -f2-)
+            set -gx $key "$val"
+          end
+        else
+          echo "File not found: $file"
+          return 1
+        end
+      end
+      export EDITOR=nano
+    '';
   };
 
   environment.variables.EDITOR = "nano";
-  programs.fish.interactiveShellInit = "export EDITOR=nano";
-
 }

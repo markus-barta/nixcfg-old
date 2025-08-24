@@ -12,14 +12,65 @@
     ./disk-config.zfs.nix
   ];
 
+  # PipeWire with static RAOP-sink (HomePodWZ)
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+# DISABLED HOMEPOD STREAMING #1/2
+#    extraConfig.pipewire."92-raop" = {
+#      "context.modules" = [
+#        { name = "libpipewire-module-raop-sink";
+#          args = {
+#            "raop.ip" = "192.168.1.142";
+#            "raop.port" = "7000";
+#            "raop.name" = "HomePodWZ";
+#            #"audio.format" = "S24LE"; # not compatible to homepod streaming
+#            "audio.format" = "S16LE";
+#            "audio.rate" = "44100";
+#            "audio.channels" = "2";
+#            "audio.buffer.time" = "200000";  # Buffer 200ms (Standard 20ms)
+#            "audio.buffer.frames" = "8820";  # 44100 Hz * 0.2s
+#            "raop.latency.ms" = "1000";  # test with latency to avaoid pop/crack-noises
+#          };
+#        }
+#      ];
+#    };
+  };
+
+# DISABLED HOMEPOD STREAMING #2/2
+#  # Overlay for RAOP support
+#  nixpkgs.overlays = [
+#    (self: super: {
+#      pipewire = super.pipewire.overrideAttrs (oldAttrs: {
+#        # buildInputs = oldAttrs.buildInputs ++ [ super.avahi ]; # Optional, stellt aber RAOP-Funktionalität sicher
+#        mesonFlags = oldAttrs.mesonFlags ++ [ "-Draop=enabled" ];
+#      });
+#    })
+#  ];
+
   # Allow unfree package for "FLIRC" IR-USB-Module
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
     "flirc"
   ];
 
-  # boot.kernelParams = [ "video=card1-HDMI-A-1:1366x768@60" ];
-  # alternative as generic video output:
-  # boot.kernelParams = [ "video=1920x1080@60" ];
+  # Enable local APC UPS monitoring
+  # Notes
+  #     - The header '## apcupsd.conf v1.1 ##' with a comment is added by NixOS at the beginning
+  #     - We do not need the SCRIPTDIR but it is aded by NixOS too with something like
+  #       'SCRIPTDIR /nix/store/randomcharacters-apcupsd-scriptdir'
+    services.apcupsd = {
+      enable = true;
+      configText = ''
+        UPSCABLE usb
+        UPSTYPE usb
+        DEVICE
+      '';
+    };
+
+  # Enable bluetooth
+  hardware.bluetooth.enable = true;
 
   # Bootloader configuration
   boot = {
@@ -50,8 +101,16 @@
     hostId = "dabfdb01";  # Needed for ZFS
     hostName = "miniserver24";
     networkmanager.enable = true;
-    nameservers = ["192.168.1.100"];
+    # nameservers = ["1.1.1.1"]; # We utilize an external DNS server to ensure web access at boot time, prior to the Pi-hole becoming operational.
+    nameservers = ["localhost"]; # Many services (docker container) depend on internal hostnames, so we need to use local DNS
+    search = ["lan"];
     defaultGateway = "192.168.1.5";
+    hosts = {
+      "192.168.1.32" = [ "kr-sonnen-batteriespeicher" "kr-sonnen-batteriespeicher.lan" ];
+      "192.168.1.102" = [ "vr-opus-gateway" "vr-opus-gateway.lan" ];
+      "192.168.1.159" = [ "wz-pixoo-64-00" "wz-pixoo-64-00.lan" ];
+      "192.168.1.189" = [ "wz-pixoo-64-01" "wz-pixoo-64-01.lan" ];
+    };
     interfaces.enp3s0f0 = {
       ipv4.addresses = [{ address = "192.168.1.101"; prefixLength = 24; }];
     };
@@ -112,6 +171,7 @@
     vlc     # Video playback software
     openbox # Lightweight window manager
     xorg.xset  # X11 user preference utility tool
+    pulseaudio # To enable audio forwarding to a homepod
   ];
 
   # +X11 and VLC kiosk mode configuration
@@ -148,6 +208,27 @@
       xorg.xset
     ];
   };
+
+  # APC UPS MQTT periodic publishing
+    systemd.services.apc-to-mqtt = {
+      description = "Publish APC UPS status to MQTT";
+      script = "/home/mba/scripts/apc-to-mqtt.sh";
+      serviceConfig = {
+        Type = "oneshot";
+        User = "mba";
+        Environment = "PATH=/run/current-system/sw/bin";
+      };
+    };
+
+    systemd.timers.apc-to-mqtt = {
+      description = "Timer for APC UPS MQTT publishing";
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnBootSec = "1min";
+        OnUnitActiveSec = "1min"; # every 1 minutes
+        Unit = "apc-to-mqtt.service";
+      };
+    };
 
   # MQTT-based VLC Volume Control Service for NixOS
   #
